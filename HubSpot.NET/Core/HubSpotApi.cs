@@ -38,7 +38,5 @@ namespace HubSpot.NET.Core
             CompanyProperties = new HubSpotCompaniesPropertiesApi(client);
             EmailSubscriptions = new HubSpotEmailSubscriptionsApi(client);
         }
-
     }
-
 }

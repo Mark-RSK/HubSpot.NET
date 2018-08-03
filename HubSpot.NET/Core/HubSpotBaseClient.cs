@@ -10,15 +10,20 @@ namespace HubSpot.NET.Core
     public class HubSpotBaseClient : IHubSpotClient
     {
         private readonly RequestSerializer _serializer = new RequestSerializer(new RequestDataConverter());
-        private readonly RestClient _client;
+        private readonly IRestClient _client;
 
-        private string _baseUrl => "https://api.hubapi.com";
+        private static string _baseUrl => "https://api.hubapi.com";
         private readonly string _apiKey;
 
         public HubSpotBaseClient(string apiKey)
+            : this(apiKey, new RestClient(_baseUrl))
+        {
+        }
+
+        public HubSpotBaseClient(string apiKey, IRestClient client)
         {
             _apiKey = apiKey;
-            _client = new RestClient(_baseUrl);
+            _client = client;
         }
 
         public T Execute<T>(string absoluteUriPath, object entity = null, Method method = Method.GET, bool convertToPropertiesSchema = true) where T : IHubSpotModel, new()
